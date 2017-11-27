@@ -1,88 +1,60 @@
 var socket = io.connect(window.location.origin);
 
-socket.on('color-box', function (data) {
-  boxes[data.index].color = data.color;
+var movement = {
+  up: false,
+  down: false,
+  left: false,
+  right: false
+}
+document.addEventListener('keydown', function(event) {
+  switch (event.keyCode) {
+    case 65: // A
+      movement.left = true;
+      break;
+    case 87: // W
+      movement.up = true;
+      break;
+    case 68: // D
+      movement.right = true;
+      break;
+    case 83: // S
+      movement.down = true;
+      break;
+  }
 });
-
-socket.on('all-boxes', function(allboxes) {
-  for (var i = 0; i < allboxes.length; i ++) {
-    var data = allboxes[i];
-    boxes[data.index].color = data.color;
-    console.log(data);
+document.addEventListener('keyup', function(event) {
+  switch (event.keyCode) {
+    case 65: // A
+      movement.left = false;
+      break;
+    case 87: // W
+      movement.up = false;
+      break;
+    case 68: // D
+      movement.right = false;
+      break;
+    case 83: // S
+      movement.down = false;
+      break;
   }
 });
 
-socket.on('jiggle', function(data) {
- jiggleTarget = +data.jiggle;
+socket.emit('new player');
+setInterval(function() {
+  socket.emit('movement', movement);
+}, 1000 / 60);
+
+socket.on('state', function(players) {
+	background(0);
+  for (var id in players) {
+		var player = players[id];
+    ellipse(player.x, player.y, 30, 30);
+  }
 });
-
-
-var boxes = [];
-var myColor;
-var jiggle = jiggleTarget = 0;
 
 function setup() {
-	colorMode(HSB);
 	createCanvas(800, 800);
-
-	myColor = random(255);
-
-	var gridsize = width/80;
-  for (var x = 0; x < width; x+= gridsize) {
-
-	  for (var y = 0; y < height; y+= gridsize) {
-	  	var box = new Box(gridsize, x, y);
-	  	boxes.push(box);
-	  }
-  }
 }
 
 function draw() {
-	background(0);
-  jiggle = lerp(jiggle, jiggleTarget, .1);
-
-  for (var i = 0; i < boxes.length; i++){
-  	boxes[i].run();
-  }
-}
-
-function colorBox() {
-	for (var i = 0; i < boxes.length; i++){
-		if (boxes[i].over()) {
-			boxes[i].color = myColor;
-      socket.emit('color-box', {color: myColor, index: i});
-		}
-	}
-}
-
-function mousePressed() {
-  colorBox();
-}
-
-function mouseDragged() {
-  colorBox();
-}
-
-function Box(size, x, y) {
-	this.size = size;
-	this.x = x;
-	this.y = y;
-}
-
-Box.prototype.over = function() {
-  return (mouseX >= this.x && mouseX < this.x+this.size && mouseY >= this.y && mouseY < this.y + this.size);
-};
-
-Box.prototype.run = function() {
-  stroke(5);
-  if (this.over()) {
-		fill(255);
-  } else if (this.color) {
-		fill(this.color, 255, 255);
-	} else {
-		fill(0);
-	}
-  var x = this.x + random(-jiggle, jiggle);
-  var y = this.y + random(-jiggle, jiggle);
-	rect(x, y, this.size, this.size);
 }
