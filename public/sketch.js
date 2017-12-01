@@ -39,21 +39,29 @@ document.addEventListener('keyup', function(event) {
   }
 });
 
+
+
 socket.emit('new player');
 setInterval(function() {
   socket.emit('movement', movement);
+
 }, 1000 / 60);
 
-socket.on('state', function(players) {
-	background(0);
-  for (var id in players) {
-		var player = players[id];
-    ellipse(player.x, player.y, 30, 30);
+socket.on('state', function(data) {
+    background(0);
+  for (var id in data.players) {
+    var player = data.players[id];
+    fill(100, 100, 100);
+    ellipse(player.x, player.y, player.size, player.size);
+  }
+  for (var f of data.food) {
+      fill(0, 255, 0);
+      ellipse(f.x, f.y, 10, 10);
   }
 });
 
 function setup() {
-	createCanvas(800, 800);
+    createCanvas(1000, 800);
 }
 
 function draw() {
