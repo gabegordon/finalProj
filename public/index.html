@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Interactive Project</title>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>Interactive Project</title>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        <input id="name" value="Connect">
+        <button id='mylink'>Connect</button>
 
-    <script src="libraries/p5.js" type="text/javascript"></script>
+        <script type="text/javascript">
 
-    <script src="libraries/p5.dom.js" type="text/javascript"></script>
-    <script src="libraries/p5.sound.js" type="text/javascript"></script>
+         var button = document.getElementById('mylink');
 
-    <script src="sketch.js" type="text/javascript"></script>
+         button.onclick = function(){
+             console.log('here');
 
-    <style> body {padding: 0; margin: 0;} canvas {vertical-align: top;} </style>
-  </head>
-  <body>
-  </body>
+             var script = document.createElement("script");
+             script.type = "text/javascript";
+             script.src = "sketch.js";
+             var script2 = document.createElement("script");
+             script2.type = "text/javascript";
+             script2.src = "libraries/p5.js";
+
+             document.getElementsByTagName("head")[0].appendChild(script2);
+             document.getElementsByTagName("head")[0].appendChild(script);
+             return false;
+         }
+
+
+        </script>
+
+
+        <style> body {padding: 0; margin: 0;} canvas {vertical-align: top;} </style>
+    </head>
+    <body>
+    </body>
 </html>

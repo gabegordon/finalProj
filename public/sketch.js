@@ -5,7 +5,8 @@ var movement = {
   down: false,
   left: false,
   right: false
-}
+};
+
 document.addEventListener('keydown', function(event) {
   switch (event.keyCode) {
     case 65: // A
@@ -58,6 +59,12 @@ socket.on('state', function(data) {
       fill(0, 255, 0);
       ellipse(f.x, f.y, 10, 10);
   }
+});
+
+socket.on('victory', function(data) {
+    background(0);
+    textMode(CENTER);
+    text('Player __ won', 400, 400);
 });
 
 function setup() {

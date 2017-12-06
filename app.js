@@ -10,12 +10,14 @@ app.use(express.static('public'));
 
 var players = {};
 var food = [];
+
 class Food {
     constructor() {
         this.x = Math.floor(Math.random() * 1000);
         this.y = Math.floor(Math.random() * 800);
     }
 }
+
 for (let i = 0; i < 50; i++) {
     food.push(new Food());
 }
@@ -25,7 +27,7 @@ io.on('connection', function(socket) {
         players[socket.id] = {
             x: Math.floor(Math.random() * 1000),
             y: Math.floor(Math.random() * 800),
-            size: Math.floor(Math.random() * 100)
+            size: 30
         };
     });
     socket.on('movement', function(data) {
@@ -44,6 +46,7 @@ io.on('connection', function(socket) {
         }
         for (var player in players) {
             if (players[player].size > 400) {
+                socket.emit('victory', players[player]);
                 for (const p in players) {
                     players[p].x = 300;
                     players[p].y = 300;
