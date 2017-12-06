@@ -13,10 +13,9 @@ var food = [];
 
 class Food {
     constructor() {
-        this.x = Math.floor(Math.random() * 5000);
-        this.y = Math.floor(Math.random() * 5000);
-        this.xOff = this.x - 800;
-        this.yOff = this.y - 800;
+        this.x = Math.floor(Math.random() * 800);
+        this.y = Math.floor(Math.random() * 800);
+        
     }
 }
 
@@ -26,30 +25,39 @@ for (let i = 0; i < 50; i++) {
 
 io.on('connection', function(socket) {
     socket.on('new player', function(data) {
+		console.log(socket.id);
+		const x1 = Math.floor(Math.random() * 800);
+		const y1 = Math.floor(Math.random() * 800);
         players[socket.id] = {
-            x: Math.floor(Math.random() * 5000),
-            y: Math.floor(Math.random() * 5000),
+            x: x1,
+            y: y1,
             size: 30,
-            name: data.name
+            name: data.name,
+			xOff: (400 - x1),
+			yOff: (400 - y1),
         };
     });
     socket.on('movement', function(data) {
         var player = players[socket.id] || {};
         if (data.left) {
             player.x -= 5;
+			player.xOff = 400 - player.x;
         }
         if (data.up) {
             player.y -= 5;
+			player.yOff = 400 - player.y;
         }
         if (data.right) {
             player.x += 5;
+			player.xOff = 400 - player.x;
         }
         if (data.down) {
             player.y += 5;
+			player.yOff = 400 - player.y;
         }
         for (var player in players) {
             if (players[player].size > 400) {
-                socket.emit('victory', players[player]);
+                io.sockets.emit('victory', players[player]);
                 for (const p in players) {
                     players[p].x = Math.floor(Math.random() * 5000);
                     players[p].y = Math.floor(Math.random() * 5000);

@@ -48,16 +48,16 @@ setInterval(function() {
 }, 1000 / 60);
 
 socket.on('state', function(data) {
-    var id = socket.io.engine.id;
-    console.log(id);
-    const myPlayer = data.players[id];
-    if (!playerWon) {
+    var id1 = socket.io.engine.id;
+    const myPlayer = data.players[id1];
+    if (!playerWon && myPlayer) {
         push();
-        translate(myPlayer.xOff, myPlayer.yOff);
         background(0);
-        for (var id in data.players) {
+		translate(myPlayer.xOff, myPlayer.yOff);
+		fill(100, 100, 100);
+		ellipse(myPlayer.x, myPlayer.y, myPlayer.size, myPlayer.size);
+		for (var id in data.players) {
             var player = data.players[id];
-            fill(100, 100, 100);
             ellipse(player.x, player.y, player.size, player.size);
         }
         for (var f of data.food) {
@@ -80,7 +80,7 @@ socket.on('victory', function(data) {
 });
 
 function setup() {
-    createCanvas(1000, 800);
+    createCanvas(800, 800);
 }
 
 function draw() {
