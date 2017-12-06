@@ -13,8 +13,10 @@ var food = [];
 
 class Food {
     constructor() {
-        this.x = Math.floor(Math.random() * 1000);
-        this.y = Math.floor(Math.random() * 800);
+        this.x = Math.floor(Math.random() * 5000);
+        this.y = Math.floor(Math.random() * 5000);
+        this.xOff = this.x - 800;
+        this.yOff = this.y - 800;
     }
 }
 
@@ -23,11 +25,12 @@ for (let i = 0; i < 50; i++) {
 }
 
 io.on('connection', function(socket) {
-    socket.on('new player', function() {
+    socket.on('new player', function(data) {
         players[socket.id] = {
-            x: Math.floor(Math.random() * 1000),
-            y: Math.floor(Math.random() * 800),
-            size: 30
+            x: Math.floor(Math.random() * 5000),
+            y: Math.floor(Math.random() * 5000),
+            size: 30,
+            name: data.name
         };
     });
     socket.on('movement', function(data) {
@@ -48,8 +51,8 @@ io.on('connection', function(socket) {
             if (players[player].size > 400) {
                 socket.emit('victory', players[player]);
                 for (const p in players) {
-                    players[p].x = 300;
-                    players[p].y = 300;
+                    players[p].x = Math.floor(Math.random() * 5000);
+                    players[p].y = Math.floor(Math.random() * 5000);
                     players[p].size = 30;
                 }
                 break;
@@ -65,14 +68,14 @@ io.on('connection', function(socket) {
                 if (Math.hypot(players[player2].x - players[player2].x, players[player2].y - players[player].y) <= (players[player].size / 2)) {
                     if (players[player].size > players[player2].size) {
                         players[player].size += players[player2].size;
-                        players[player2].x = Math.floor(Math.random() * 1000);
-                        players[player2].y = Math.floor(Math.random() * 800);
+                        players[player2].x = Math.floor(Math.random() * 5000);
+                        players[player2].y = Math.floor(Math.random() * 5000);
                         players[player2].size = 30;
                     }
                     else if (players[player].size < players[player2].size){
                         players[player2].size += players[player].size;
-                        players[player].x = Math.floor(Math.random() * 1000);
-                        players[player].y = Math.floor(Math.random() * 800);
+                        players[player].x = Math.floor(Math.random() * 5000);
+                        players[player].y = Math.floor(Math.random() * 5000);
                         players[player].size = 30;
                     }
                 }

@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Interactive Project</title>
         <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-        <input id="name" value="Connect">
+        <input id="name" value="Enter Name">
         <button id='mylink'>Connect</button>
 
         <script type="text/javascript">
@@ -12,7 +12,8 @@
          var button = document.getElementById('mylink');
 
          button.onclick = function(){
-             console.log('here');
+             button.style.display = 'none';
+             document.getElementById('name').style.display = 'none';
 
              var script = document.createElement("script");
              script.type = "text/javascript";
