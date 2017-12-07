@@ -3,34 +3,35 @@
     <head>
         <meta charset="UTF-8">
         <title>Interactive Project</title>
+        <link rel="stylesheet" href="base.css">
         <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-		<script src="libraries/p5.js"></script>
-		<script src="libraries/p5.dom.js"></script>
+        <script src="libraries/p5.js"></script>
+        <script src="libraries/p5.dom.js"></script>
         <input id="name" value="Enter Name">
         <button id='mylink'>Connect</button>
 
         <script type="text/javascript">
 
-         var button = document.getElementById('mylink');
+            var button = document.getElementById('mylink');
 
-         button.onclick = function(){
-             button.style.display = 'none';
-             document.getElementById('name').style.display = 'none';
+            button.onclick = function(){
+            button.style.display = 'none';
+            document.getElementById('name').style.display = 'none';
 
-             var script = document.createElement("script");
-             script.type = "text/javascript";
-             script.src = "sketch.js";
-             var script2 = document.createElement("script");
-             script2.type = "text/javascript";
-             script2.src = "libraries/p5.js";
-			 var script3 = document.createElement("script");
-             script3.type = "text/javascript";
-             script3.src = "libraries/p5.dom.js";
-             document.getElementsByTagName("head")[0].appendChild(script2);
-			 document.getElementsByTagName("head")[0].appendChild(script3);
-             document.getElementsByTagName("head")[0].appendChild(script);
-             return false;
-         }
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "sketch.js";
+            var script2 = document.createElement("script");
+            script2.type = "text/javascript";
+            script2.src = "libraries/p5.js";
+            var script3 = document.createElement("script");
+            script3.type = "text/javascript";
+            script3.src = "libraries/p5.dom.js";
+            document.querySelector("head").appendChild(script2);
+            document.querySelector("head").appendChild(script3);
+            document.querySelector("head").appendChild(script);
+            return true;
+            }
 
 
         </script>

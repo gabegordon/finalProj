@@ -69,6 +69,7 @@ socket.on('state', function(data) {
 });
 
 socket.on('victory', function(data) {
+    push();
     playerWon = true;
     setTimeout(function() {
         playerWon = false;
@@ -76,7 +77,9 @@ socket.on('victory', function(data) {
     background(0);
     fill(0, 255, 0);
     textSize(42);
-    text('Player ' + data.name + ' won!', 400, 400);
+    translate(0,0);
+    text('Player ' + data.name + ' won!', 300, 400);
+    pop();
 });
 
 function setup() {
