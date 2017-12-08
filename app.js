@@ -31,10 +31,11 @@ io.on('connection', function(socket) {
         players[socket.id] = {
             x: x1,
             y: y1,
-            size: 30,
+            size: 90,
             name: data.name,
             xOff: (400 - x1),
-            yOff: (400 - y1)
+            yOff: (400 - y1),
+            image: data.image
         };
     });
     socket.on('movement', function(data) {
@@ -56,12 +57,12 @@ io.on('connection', function(socket) {
             player.yOff = 400 - player.y;
         }
         for (var player in players) {
-            if (players[player].size > 500) {
+            if (players[player].size > 600) {
                 io.sockets.emit('victory', players[player]);
                 for (const p in players) {
                     players[p].x = Math.floor(Math.random() * 5000);
                     players[p].y = Math.floor(Math.random() * 5000);
-                    players[p].size = 30;
+                    players[p].size = 90;
                 }
                 break;
             }
@@ -78,13 +79,13 @@ io.on('connection', function(socket) {
                         players[player].size += players[player2].size;
                         players[player2].x = Math.floor(Math.random() * 5000);
                         players[player2].y = Math.floor(Math.random() * 5000);
-                        players[player2].size = 30;
+                        players[player2].size = 90;
                     }
                     else if (players[player].size < players[player2].size){
                         players[player2].size += players[player].size;
                         players[player].x = Math.floor(Math.random() * 5000);
                         players[player].y = Math.floor(Math.random() * 5000);
-                        players[player].size = 30;
+                        players[player].size = 90;
                     }
                 }
             }
