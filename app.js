@@ -41,20 +41,28 @@ io.on('connection', function(socket) {
     socket.on('movement', function(data) {
         var player = players[socket.id] || {};
         if (data.left) {
-            player.x -= 5;
-            player.xOff = 400 - player.x;
+            if(player.x > 5) {
+                player.x -= 5;
+                player.xOff = 400 - player.x;
+            }
         }
         if (data.up) {
-            player.y -= 5;
-            player.yOff = 400 - player.y;
+            if(player.y > 5) {
+                player.y -= 5;
+                player.yOff = 400 - player.y;
+            }
         }
         if (data.right) {
-            player.x += 5;
-            player.xOff = 400 - player.x;
+            if(player.x <= 4995) {
+                player.x += 5;
+                player.xOff = 400 - player.x;
+            }
         }
         if (data.down) {
-            player.y += 5;
-            player.yOff = 400 - player.y;
+            if(player.y <= 4995) {
+                player.y += 5;
+                player.yOff = 400 - player.y;
+            }
         }
         for (var player in players) {
             if (players[player].size > 600) {
