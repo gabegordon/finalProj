@@ -88,7 +88,6 @@ setInterval(function() {
 socket.on('state', function(data) {
     var id1 = socket.io.engine.id;
     const myPlayer = data.players[id1];
-    console.log(frameCount);
     if (!playerWon && myPlayer) {
         push();
         imageMode(CORNER);
