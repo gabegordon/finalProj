@@ -86,10 +86,10 @@ setInterval(function() {
 }, 1000 / 60);
 
 socket.on('state', function(data) {
-    pop();
     var id1 = socket.io.engine.id;
     const myPlayer = data.players[id1];
     if (!playerWon && myPlayer) {
+        push();
         imageMode(CORNER);
         background(bg);
         translate(myPlayer.xOff, myPlayer.yOff);
@@ -106,6 +106,7 @@ socket.on('state', function(data) {
                 image(food, f.x, f.y, 50, 50);
             }
         }
+        pop();
     }
 });
 
