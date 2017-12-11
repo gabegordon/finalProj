@@ -79,7 +79,7 @@ function getImage() {
     return Math.floor(Math.random()* 4);
 }
 
-socket.emit('new player', {name: document.getElementById('name').value, image: getImage()});
+socket.emit('new player', {name: document.querySelector('.name').value, image: getImage()});
 setInterval(function() {
     socket.emit('movement', movement);
 
