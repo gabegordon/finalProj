@@ -119,6 +119,5 @@ socket.on('victory', function(data) {
     background(bg);
     fill(0, 255, 0);
     textSize(42);
-    translate(0,0);
     text(data.name + ' won!', 250, 400);
 });
