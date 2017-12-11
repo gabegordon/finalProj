@@ -88,6 +88,7 @@ setInterval(function() {
 socket.on('state', function(data) {
     var id1 = socket.io.engine.id;
     const myPlayer = data.players[id1];
+    console.log(data.food.length);
     if (!playerWon && myPlayer) {
         push();
         imageMode(CORNER);
@@ -111,7 +112,6 @@ socket.on('state', function(data) {
 });
 
 socket.on('victory', function(data) {
-    pop();
     playerWon = true;
     setTimeout(function() {
         playerWon = false;
