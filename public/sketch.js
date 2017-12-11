@@ -111,7 +111,6 @@ socket.on('state', function(data) {
 });
 
 socket.on('victory', function(data) {
-    push();
     playerWon = true;
     setTimeout(function() {
         playerWon = false;
@@ -122,5 +121,4 @@ socket.on('victory', function(data) {
     textSize(42);
     translate(0,0);
     text(data.name + ' won!', 250, 400);
-    pop();
 });
