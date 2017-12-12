@@ -28,6 +28,7 @@ function draw() {
 
 const button = document.querySelector('button');
 button.addEventListener('click', () => {
+	socket.emit('new player', {name: document.querySelector('#name').value, image: getImage()});
     document.querySelector('canvas').classList.remove('p5_hidden');
     document.querySelector('canvas').style.visibility = 'visible';
     document.querySelector('button').style.display = 'none';
@@ -79,10 +80,8 @@ function getImage() {
     return Math.floor(Math.random()* 4);
 }
 
-socket.emit('new player', {name: document.querySelector('#name').value, image: getImage()});
 setInterval(function() {
     socket.emit('movement', movement);
-
 }, 1000 / 60);
 
 socket.on('state', function(data) {
@@ -95,7 +94,6 @@ socket.on('state', function(data) {
         translate(myPlayer.xOff, myPlayer.yOff);
         fill(100, 100, 100);
         imageMode(CENTER);
-        image(images[myPlayer.image], myPlayer.x, myPlayer.y, myPlayer.size, myPlayer.size);
         for (var id in data.players) {
             var player = data.players[id];
             image(images[player.image], player.x, player.y, player.size, player.size);
