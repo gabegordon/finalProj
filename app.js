@@ -82,7 +82,7 @@ io.on('connection', function(socket) {
                 }
             }
             for (var player2 in players) {
-                if (Math.hypot(players[player2].x - players[player2].x, players[player2].y - players[player].y) <= (players[player].size / 2)) {
+                if (Math.hypot(players[player2].x - players[player].x, players[player2].y - players[player].y) <= (players[player].size / 2)) {
                     if (players[player].size > players[player2].size) {
                         players[player].size += players[player2].size;
                         players[player2].x = Math.floor(Math.random() * 5000);
